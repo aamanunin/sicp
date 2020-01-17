@@ -2,24 +2,23 @@
 
 (#%require rackunit)
 
-(define (A x y)
-  (cond ((= y 0) 0)
-        ((= x 0) (* 2 y))
-        ((= y 1) 2)
-        (else (A (- x 1)
-                 (A x (- y 1))))))
+; recursive process
+(define (f n)
+  (cond ((< n 3) n)
+        (else (+ (f (- n 1)) (f (- n 2)) (f (- n 3))))))
 
-(A 1 10)
-;1024
+(f 4)
+(f 5)
+(f 6)
 
-(A 2 4)
-;65536
+; iterative process
+(define (f2 n)
+  (define (f-iter a b c count)
+    (if (= count 0)
+        a
+        (f-iter b c (+ a b c) (- count 1))))
+  (f-iter 0 1 2 n))
 
-(A 3 3)
-;65536
-
-;(f n) = 2n
-
-;(g n) = 2^n
-
-;(h n) = 2^2^2^...   count 2^ = n
+(f2 4)
+(f2 5)
+(f2 6)
